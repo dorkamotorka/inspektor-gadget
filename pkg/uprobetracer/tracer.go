@@ -154,11 +154,15 @@ func (t *Tracer[Event]) AttachProg(progName string, progType ProgType, attachTo 
 	t.progName = progName
 	t.progType = progType
 	t.attachFilePath = parts[0]
+  t.logger.Debugf("------------------------ t.attachFilePath = %s", t.attachFilePath)
 	t.attachSymbol = parts[1]
 	t.prog = prog
 
+  t.logger.Debugf("=============================== before t.pendingContainerPids loop =================================================")
+  t.logger.Debugf("=============================== %v =================================================", t.pendingContainerPids)
 	// attach to pending containers, then release the pending list
 	for pid := range t.pendingContainerPids {
+    t.logger.Debugf("=============================== Attaching to pending containers =================================================")
 		t.attach(pid)
 	}
 	t.pendingContainerPids = nil
@@ -191,7 +195,33 @@ func (t *Tracer[Event]) attachUprobe(file *os.File) (link.Link, error) {
 	case ProgUprobe:
 		return ex.Uprobe(t.attachSymbol, t.prog, nil)
 	case ProgUretprobe:
-		return ex.Uretprobe(t.attachSymbol, t.prog, nil)
+		t.logger.Debugf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    writeOff, readOff := GetFunctionOffsets(attachPath)
+    t.logger.Debugf("Write offsets")
+    t.logger.Debugf("%d", writeOff)
+    t.logger.Debugf("Read offsets")
+    t.logger.Debugf("%v", readOff)
+
+    var last link.Link
+    if t.progName == "uprobe_read" || t.progName == "uretprobe_read" { 
+      for _, ret := range readOff {
+        t.logger.Debugf("Attaching %s to .Read()", t.prog)
+        last, err = ex.Uprobe("crypto/tls.(*Conn).Read", t.prog, &link.UprobeOptions{Address: ret})
+        if err != nil {
+          return nil, fmt.Errorf("installing uprobe: %w", err)
+        }
+      }
+    } else {
+      t.logger.Debugf("Attaching %s to .writeRecordLocked()", t.prog)
+      last, err = ex.Uprobe("crypto/tls.(*Conn).writeRecordLocked", t.prog, &link.UprobeOptions{Address: writeOff})
+      if err != nil {
+        return nil, fmt.Errorf("installing uprobe: %w", err)
+      }
+
+    }
+		t.logger.Debugf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+		return last, nil
+		//return ex.Uretprobe(t.attachSymbol, t.prog, nil)
 	case ProgUSDT:
 		attachInfo, err := getUsdtInfo(attachPath, t.attachSymbol)
 		if err != nil {
@@ -219,6 +249,7 @@ func (t *Tracer[Event]) attach(containerPid uint32) {
 		t.logger.Debugf("cannot find file to attach in container %d for symbol %q", containerPid, t.attachSymbol)
 	}
 
+  t.logger.Debugf("------------------unsecuredAttachFilePaths = %+v in attach()", unsecuredAttachFilePaths)
 	for _, filePath := range unsecuredAttachFilePaths {
 		// Thankfully, OpenInContainer returns a fd opened without `O_PATH`.
 		// This is necessary because `ReadRealInodeFromFd` needs the
