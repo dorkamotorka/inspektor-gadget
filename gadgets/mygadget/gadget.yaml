@@ -1,0 +1,38 @@
+name: 'TODO: Fill the gadget name'
+description: 'TODO: Fill the gadget description'
+homepageURL: 'TODO: Fill the gadget homepage URL'
+documentationURL: 'TODO: Fill the gadget documentation URL'
+sourceURL: 'TODO: Fill the gadget source code URL'
+datasources:
+  raw:
+    fields:
+      buf:
+        annotations:
+          description: 'TODO: Fill field description'
+      comm:
+        annotations:
+          description: 'TODO: Fill field description'
+      data:
+        annotations:
+          description: 'TODO: Fill field description'
+      data_len:
+        annotations:
+          description: 'TODO: Fill field description'
+      event_type:
+        annotations:
+          description: 'TODO: Fill field description'
+      len:
+        annotations:
+          description: 'TODO: Fill field description'
+      op_raw:
+        annotations:
+          description: 'TODO: Fill field description'
+      pid:
+        annotations:
+          description: 'TODO: Fill field description'
+      tid:
+        annotations:
+          description: 'TODO: Fill field description'
+      ts_ns:
+        annotations:
+          description: 'TODO: Fill field description'
