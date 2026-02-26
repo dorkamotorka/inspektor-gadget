@@ -449,6 +449,7 @@ func (l *localManagerTrace) handleGadgetInstance(log logger.Logger) error {
 		}
 
 		if host {
+			fmt.Println("============================ Attaching fake container for host tracing ============================")
 			containers = append(containers, l.manager.fakeContainer)
 		}
 
