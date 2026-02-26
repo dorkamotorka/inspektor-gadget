@@ -31,6 +31,7 @@ func (r *Runtime) GetGadgetInfo(gadgetCtx runtime.GadgetContext, runtimeParams *
 }
 
 func (r *Runtime) RunGadget(gadgetCtx runtime.GadgetContext, runtimeParams *params.Params, paramValues api.ParamValues) error {
+  fmt.Println("Teo - RunGadget in local")
 	return gadgetCtx.Run(paramValues)
 }
 
