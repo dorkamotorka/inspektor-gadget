@@ -57,6 +57,8 @@ func (c *GadgetContext) instantiateOperators(paramValues api.ParamValues) error 
 		// Get and fill params
 		instanceParams := op.InstanceParams().AddPrefix(opParamPrefix)
 		opParamValues := paramValues.ExtractPrefixedValues(opParamPrefix)
+    fmt.Printf("============ opParamValues PARAMS in gadget-context/run.go in instantiateOperators: %+v ==============", opParamValues)
+    fmt.Printf("============ instanceParams PARAMS in gadget-context/run.go in instantiateOperators: %+v ==============", instanceParams)
 
 		apihelpers.MergeWithAlternativeKeys(instanceParams, opParamValues)
 
@@ -230,7 +232,7 @@ func (c *GadgetContext) Run(paramValues api.ParamValues) error {
 
 	// keep a copy - currently only used for custom params in SetMetadata()
 	c.paramValues = paramValues
-  fmt.Printf("\n--- DEBUG PARAMS in gadget-context/run.go ---\n%+v\n--------------------\n", paramValues)
+  fmt.Printf("\n--- DEBUG PARAMS in gadget-context/run.go: %+v\n--------------------\n", paramValues)
 
 	metricAttribs := attribute.NewSet(
 		attribute.KeyValue{Key: "gadget_image", Value: attribute.StringValue(c.imageName)},
