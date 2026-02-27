@@ -230,6 +230,7 @@ func (c *GadgetContext) Run(paramValues api.ParamValues) error {
 
 	// keep a copy - currently only used for custom params in SetMetadata()
 	c.paramValues = paramValues
+  fmt.Printf("\n--- DEBUG PARAMS in gadget-context/run.go ---\n%+v\n--------------------\n", paramValues)
 
 	metricAttribs := attribute.NewSet(
 		attribute.KeyValue{Key: "gadget_image", Value: attribute.StringValue(c.imageName)},
