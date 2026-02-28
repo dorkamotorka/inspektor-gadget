@@ -86,6 +86,8 @@ func (c *GadgetContext) instantiateOperators(paramValues api.ParamValues) error 
 		// Add instance params only if operator was actually instantiated (i.e., activated)
 		params = append(params, instanceParams...)
 	}
+    fmt.Printf("============ localOperators in gadget-context/run.go in instantiateOperators: %+v ==============", c.localOperators)
+    fmt.Printf("============ params in gadget-context/run.go in instantiateOperators: %+v ==============", params)
 
 	for _, opInst := range c.localOperators {
 		log.Debugf("preparing op %q", opInst.Name())
