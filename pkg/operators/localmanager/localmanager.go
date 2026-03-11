@@ -609,7 +609,7 @@ func (l *localManagerTraceWrapper) PreStart(gadgetCtx operators.GadgetContext) e
 
 	id := uuid.New()
 	host := l.params.Get(Host).AsBool()
-  	//fmt.Printf("host value in operators/localmanager/localmanager.go in PreStart: %t\n", host)
+	gadgetCtx.Logger().Debugf("host value in operators/localmanager/localmanager.go in PreStart: %t\n", host)
 
 	containerSelector := common.NewContainerSelector(l.params)
 
@@ -650,7 +650,7 @@ func (l *localManagerTraceWrapper) Start(gadgetCtx operators.GadgetContext) erro
 
 
 	host := l.params.Get(Host).AsBool()
-  	//fmt.Printf("host value in operators/localmanager/localmanager.go in Start: %t\n", host)
+	gadgetCtx.Logger().Debugf("host value in operators/localmanager/localmanager.go in Start: %t\n", host)
 	containerSelector := common.NewContainerSelector(l.params)
 
 	extraContainers := []*containercollection.Container{}

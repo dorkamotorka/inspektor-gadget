@@ -159,7 +159,7 @@ func (t *Tracer[Event]) AttachProg(progName string, progType ProgType, attachTo 
 	t.prog = prog
 
   	//t.logger.Debugf("=============================== before t.pendingContainerPids loop =================================================")
-  	//t.logger.Debugf("=============================== %v =================================================", t.pendingContainerPids)
+  	t.logger.Debugf("=============================== %v =================================================", t.pendingContainerPids)
 	// attach to pending containers, then release the pending list
 	for pid := range t.pendingContainerPids {
     	//t.logger.Debugf("=============================== Attaching to pending containers =================================================")
