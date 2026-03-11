@@ -159,7 +159,7 @@ func (t *Tracer[Event]) AttachProg(progName string, progType ProgType, attachTo 
 	t.prog = prog
 
   	//t.logger.Debugf("=============================== before t.pendingContainerPids loop =================================================")
-  	fmt.Printf("=============================== %v =================================================\n", t.pendingContainerPids)
+  	//fmt.Printf("=============================== %v =================================================\n", t.pendingContainerPids)
 	// attach to pending containers, then release the pending list
 	for pid := range t.pendingContainerPids {
     	//t.logger.Debugf("=============================== Attaching to pending containers =================================================")
@@ -195,25 +195,25 @@ func (t *Tracer[Event]) attachUprobe(file *os.File) (link.Link, error) {
 	case ProgUprobe:
 		return ex.Uprobe(t.attachSymbol, t.prog, nil)
 	case ProgUretprobe:
-		fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+		t.logger.Infof("KCNA26: Attaching Uprobes to Kubelet")
 		writeOff, readOff := GetFunctionOffsets(attachPath)
 		var last link.Link
 		if t.progName == "uprobe_read" || t.progName == "uretprobe_read" { 
 			for _, ret := range readOff {
-				fmt.Printf("Attaching %s to .Read()\n", t.prog)
+				//fmt.Printf("Attaching %s to .Read()\n", t.prog)
 				last, err = ex.Uprobe("crypto/tls.(*Conn).Read", t.prog, &link.UprobeOptions{Address: ret})
 				if err != nil {
 					return nil, fmt.Errorf("installing uprobe: %w", err)
 				}
 			}
 		} else {
-			fmt.Printf("Attaching %s to .writeRecordLocked()\n", t.prog)
+			//fmt.Printf("Attaching %s to .writeRecordLocked()\n", t.prog)
 			last, err = ex.Uprobe("crypto/tls.(*Conn).writeRecordLocked", t.prog, &link.UprobeOptions{Address: writeOff})
 			if err != nil {
 				return nil, fmt.Errorf("installing uprobe: %w", err)
 			}
 		}
-		fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+		//fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 		return last, nil
 		//return ex.Uretprobe(t.attachSymbol, t.prog, nil)
 	case ProgUSDT:
