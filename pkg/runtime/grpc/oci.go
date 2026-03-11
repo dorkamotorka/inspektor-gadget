@@ -74,7 +74,7 @@ func (r *Runtime) GetGadgetInfo(gadgetCtx runtime.GadgetContext, runtimeParams *
 }
 
 func (r *Runtime) RunGadget(gadgetCtx runtime.GadgetContext, runtimeParams *params.Params, paramValues api.ParamValues) error {
-  fmt.Println("Teo - RunGadget in grpc") 
+  	//fmt.Println("Teo - RunGadget in grpc") 
 	if runtimeParams == nil {
 		runtimeParams = r.ParamDescs().ToParams()
 	}

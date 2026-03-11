@@ -57,8 +57,8 @@ func (c *GadgetContext) instantiateOperators(paramValues api.ParamValues) error 
 		// Get and fill params
 		instanceParams := op.InstanceParams().AddPrefix(opParamPrefix)
 		opParamValues := paramValues.ExtractPrefixedValues(opParamPrefix)
-    fmt.Printf("============ opParamValues PARAMS in gadget-context/run.go in instantiateOperators: %+v ==============", opParamValues)
-    fmt.Printf("============ instanceParams PARAMS in gadget-context/run.go in instantiateOperators: %+v ==============", instanceParams)
+    	//fmt.Printf("============ opParamValues PARAMS in gadget-context/run.go in instantiateOperators: %+v ==============", opParamValues)
+    	//fmt.Printf("============ instanceParams PARAMS in gadget-context/run.go in instantiateOperators: %+v ==============", instanceParams)
 
 		apihelpers.MergeWithAlternativeKeys(instanceParams, opParamValues)
 
@@ -86,8 +86,8 @@ func (c *GadgetContext) instantiateOperators(paramValues api.ParamValues) error 
 		// Add instance params only if operator was actually instantiated (i.e., activated)
 		params = append(params, instanceParams...)
 	}
-    fmt.Printf("============ localOperators in gadget-context/run.go in instantiateOperators: %+v ==============", c.localOperators)
-    fmt.Printf("============ params in gadget-context/run.go in instantiateOperators: %+v ==============", params)
+    //fmt.Printf("============ localOperators in gadget-context/run.go in instantiateOperators: %+v ==============", c.localOperators)
+    //fmt.Printf("============ params in gadget-context/run.go in instantiateOperators: %+v ==============", params)
 
 	for _, opInst := range c.localOperators {
 		log.Debugf("preparing op %q", opInst.Name())
@@ -234,7 +234,7 @@ func (c *GadgetContext) Run(paramValues api.ParamValues) error {
 
 	// keep a copy - currently only used for custom params in SetMetadata()
 	c.paramValues = paramValues
-  fmt.Printf("\n--- DEBUG PARAMS in gadget-context/run.go: %+v\n--------------------\n", paramValues)
+  	//fmt.Printf("\n--- DEBUG PARAMS in gadget-context/run.go: %+v\n--------------------\n", paramValues)
 
 	metricAttribs := attribute.NewSet(
 		attribute.KeyValue{Key: "gadget_image", Value: attribute.StringValue(c.imageName)},
