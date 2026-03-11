@@ -348,7 +348,7 @@ func (l *localManagerTrace) PreGadgetRun() error {
 func (l *localManagerTrace) handleGadgetInstance(log logger.Logger) error {
 	id := uuid.New()
 	host := l.params.Get(Host).AsBool()
-  	//fmt.Printf("host value in operators/localmanager/localmanager.go in handleGadgetInstance: %t\n", host)
+  	fmt.Printf("host value in operators/localmanager/localmanager.go in handleGadgetInstance: %t\n", host)
 
 	containerSelector := common.NewContainerSelector(l.params)
 
@@ -450,7 +450,7 @@ func (l *localManagerTrace) handleGadgetInstance(log logger.Logger) error {
 		}
 
 		if host {
-			//fmt.Println("============================ Attaching fake container for host tracing ============================")
+			fmt.Println("============================ Attaching fake container for host tracing ============================")
 			containers = append(containers, l.manager.fakeContainer)
 		}
 
