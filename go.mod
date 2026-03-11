@@ -1,6 +1,6 @@
 module github.com/inspektor-gadget/inspektor-gadget
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -203,7 +203,10 @@ require (
 	sigs.k8s.io/release-utils v0.11.1 // indirect
 )
 
-require github.com/in-toto/in-toto-golang v0.9.0
+require (
+	github.com/in-toto/in-toto-golang v0.9.0
+	golang.org/x/arch v0.25.0
+)
 
 require (
 	github.com/Azure/go-ntlmssp v0.0.0-20221128193559-754e69321358 // indirect
